@@ -23,11 +23,11 @@ public class EntraineurDAO {
             throw new IllegalArgumentException("Entraineur cannot be null");
         }
 
-        String sql = "INSERT INTO entraineurs (id, nom, specialite) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO entraineurs ( nom, specialite) VALUES ( ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, en.getId());
-            ps.setString(2, en.getNom());
-            ps.setString(3, en.getSpecialite());
+
+            ps.setString(1, en.getNom());
+            ps.setString(2, en.getSpecialite());
             ps.executeUpdate();
         }
     }

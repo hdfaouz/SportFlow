@@ -31,10 +31,10 @@ public class EntraineurServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action == null) {
-            action = "afficher"; // Default action is to list trainers
+            action = "afficher";
         }
         try {
-            switch (action.toLowerCase()) { // Use lowercase for consistency
+            switch (action.toLowerCase()) {
                 case "ajouter":
                     ajouterEnt(req, resp);
                     break;
@@ -91,13 +91,16 @@ public class EntraineurServlet extends HttpServlet {
 
     private void ajouterEnt(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/Entraineur/entraineur-add.jsp").forward(req, resp);
+
     }
 
     private void saveNewEntraineur(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+
         Entraineur entraineur = new Entraineur();
-        entraineur.setId(Integer.parseInt(req.getParameter("id")));
+        //entraineur.setId(Integer.parseInt(req.getParameter("id")));
         entraineur.setNom(req.getParameter("nom"));
         entraineur.setSpecialite(req.getParameter("specialite"));
+        System.out.println(entraineur);
         entraineurDAO.ajouterEntraineur(entraineur);
         resp.sendRedirect(req.getContextPath() + "/entraineur");
     }

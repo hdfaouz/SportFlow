@@ -110,7 +110,7 @@
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
 
-    <input type="submit" value="Se connecter">
+    <input type="submit"  value="Se connecter">
 </form>
 </body>
 </html>

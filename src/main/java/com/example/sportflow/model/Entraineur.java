@@ -38,4 +38,13 @@ public class Entraineur {
     public void setSpecialite(String specialite) {
         this.specialite = specialite;
     }
+
+    @Override
+    public String toString() {
+        return "Entraineur{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", specialite='" + specialite + '\'' +
+                '}';
+    }
 }

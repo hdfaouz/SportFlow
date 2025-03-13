@@ -4,100 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un Entraîneur</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
         .container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 550px;
         }
-
         h1 {
-            color: #2c3e50;
+            color: #1a1a2e;
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 1.8rem;
+            font-weight: 700;
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            color: #34495e;
+        .form-group label {
+            color: #1a1a2e;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-weight: 500;
         }
-
-        input[type="text"],
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            border-radius: 0;
+            padding: 0.75rem 0.5rem;
+            background-color: transparent;
             transition: border-color 0.3s ease;
         }
-
-        input[type="text"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        .form-control:focus {
+            border-bottom-color: #667eea;
+            box-shadow: none;
+            background-color: transparent;
         }
-
         .btn-submit {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 1.5rem;
+            background-color: #667eea;
             border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
+            padding: 0.85rem;
+            border-radius: 25px;
+            font-weight: 600;
             width: 100%;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
-
         .btn-submit:hover {
-            background-color: #2980b9;
+            background-color: #764ba2;
+            transform: translateY(-2px);
         }
-
-        .message {
-            padding: 1rem;
-            border-radius: 5px;
+        .alert {
+            border-radius: 8px;
             margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            padding: 1rem;
         }
     </style>
 </head>
@@ -110,7 +74,7 @@
         String messageType = (String) request.getAttribute("messageType");
         if (message != null && !message.isEmpty()) {
     %>
-    <div class="message <%= messageType %>">
+    <div class="alert <%= messageType.equals("success") ? "alert-success" : "alert-danger" %>">
         <%= message %>
     </div>
     <% } %>
@@ -119,13 +83,13 @@
         <input type="hidden" name="action" value="ajouter">
 
         <div class="form-group">
-            <label for="nom">Nom:</label>
-            <input type="text" id="nom" name="nom" required>
+            <label for="nom">Nom :</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
         </div>
 
         <div class="form-group">
-            <label for="specialite">Spécialité:</label>
-            <select id="specialite" name="specialite" required>
+            <label for="specialite">Spécialité :</label>
+            <select class="form-control" id="specialite" name="specialite" required>
                 <option value="">Sélectionner une spécialité</option>
                 <option value="Football">Football</option>
                 <option value="Basketball">Basketball</option>
@@ -136,9 +100,13 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn-submit">Enregistrer</button>
+            <button type="submit" class="btn btn-submit">Enregistrer</button>
         </div>
     </form>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
