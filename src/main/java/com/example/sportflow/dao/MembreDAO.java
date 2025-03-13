@@ -44,7 +44,7 @@ public class MembreDAO {
 
 
 
-    public void AjouterMemre() throws SQLException, ClassNotFoundException{
+    public void AjouterMemre(Membre membre) throws SQLException, ClassNotFoundException{
             Membre membre = new Membre();
             String sql = "INSERT INTO membre(id, nom,SportPratique,Naissance) VALUES(?,?,?,?)";
             Connection conn = ConnectionDB.getConnection();

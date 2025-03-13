@@ -69,7 +69,7 @@ public class MembreServlet extends HttpServlet {
 
     private void modifier(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Membre membre =MembreDAO.saveNewEntraineur();
+        Membre membre =MembreDAO.ModifierMembre();
         request.setAttribute("membre", membre);
         request.getRequestDispatcher("WEB-INF/Membre/modifierMembre.jsp");
     }
