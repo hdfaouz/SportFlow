@@ -41,7 +41,7 @@ public class EntraineurDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, en.getNom());
             ps.setString(2, en.getSpecialite());
-            ps.setInt(3, en.getId());
+              ps.setInt(3, en.getId());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("No entraineur found with id: " + en.getId());

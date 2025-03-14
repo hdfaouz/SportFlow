@@ -6,7 +6,7 @@ public class Membre {
     private int id;
     private String nom;
     private String SportPratique;
-    private Date Naissance;
+    private Date naissance;
 
     public Membre() {
     }
@@ -15,13 +15,27 @@ public class Membre {
         this.id = id;
         this.nom = nom;
         SportPratique = sportPratique;
-        Naissance = naissance;
+        this.naissance = naissance;
     }
 
     public Membre(String nom, String sportPratique, Date naissance) {
         this.nom = nom;
         SportPratique = sportPratique;
-        Naissance = naissance;
+        this.naissance = naissance;
+    }
+
+    public Membre(String nom, Date naissance, String sportpratique) {
+        this.nom = nom;
+        this.SportPratique = sportpratique;
+        this.naissance = naissance;
+
+    }
+
+    public Membre(int id, String nom, Date naissance, String sportpratique) {
+        this.id = id;
+        this.nom = nom;
+        this.SportPratique = sportpratique;
+        this.naissance = naissance;
     }
 
     public int getId() {
@@ -49,11 +63,10 @@ public class Membre {
     }
 
     public Date getNaissance() {
-        return Naissance;
+        return naissance;
     }
 
     public void setNaissance(Date naissance) {
-        Naissance = naissance;
+        this.naissance = naissance;
     }
-
 }

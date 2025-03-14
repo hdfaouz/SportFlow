@@ -11,76 +11,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembreDAO {
-        public static List<Membre> getAllMembre () throws SQLException, ClassNotFoundException {
-            List<Membre> membres = new ArrayList<>();
-            String sql = "SELECT * FROM membre";
-            Connection con = ConnectionDB.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Membre membre = new Membre();
-                membre.setId(rs.getInt("id"));
-                membre.setNaissance(rs.getDate("dateDeNaissance"));
-                membre.setNom(rs.getString("nom"));
-                membres.add(membre);
-            }
-            return membres;
+    private Connection connection;
+    public MembreDAO() throws SQLException, ClassNotFoundException {
+        connection = ConnectionDB.getConnection();
+    }
+    public void ajouterMembre(Membre membre) throws SQLException {
+        String query = "INSERT INTO members (nom,naissance,sportpratique) VALUES (?,?,?)";
+        try (Connection connection = ConnectionDB.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, membre.getNom());
+            preparedStatement.setDate(2,membre.getNaissance());
+            preparedStatement.setString(3,membre.getSportPratique());
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
-        public static Membre getMembreById(int id) throws SQLException, ClassNotFoundException {
-            String sql = "SELECT * FROM membre WHERE id = ?";
-            Connection con = ConnectionDB.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Membre(
-                        rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("SportPratique"),
-                        rs.getDate("Naissance"));
-            }
-         return null;
+    }
+    public void modifierMembre(Membre membre) throws SQLException {
+        String query = "UPDATE members SET nom=?,naissance=?,sportpratique=? WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1,membre.getNom());
+        preparedStatement.setDate(2, membre.getNaissance());
+        preparedStatement.setString(3,membre.getSportPratique());
+        preparedStatement.setInt(4,membre.getId());
+        preparedStatement.executeUpdate();
+    }
+    public List<Membre> afficherMembre() throws SQLException {
+        List<Membre> membreList = new ArrayList<Membre>();
+        String query = "SELECT * FROM members";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Membre membre = new Membre(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nom"),
+                    resultSet.getDate("naissance"),
+                    resultSet.getString("sportpratique"));
+            membreList.add(membre);
+        }
+        return membreList;
+    }
+    public void supprimerMembre(int id) throws SQLException {
+        String query = "DELETE FROM members WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1,id);
+        preparedStatement.executeUpdate();
+    }
+    public Membre getMembreById(int id) throws SQLException {
+        String query = "SELECT * FROM members WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            return new Membre(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nom"),
+                    resultSet.getDate("naissance"),
+                    resultSet.getString("sportpratique"));
 
         }
-
-
-
-    public void AjouterMembre() throws SQLException, ClassNotFoundException{
-            Membre membre = new Membre();
-            String sql = "INSERT INTO membre(id, nom,SportPratique,Naissance) VALUES(?,?,?,?)";
-            Connection conn = ConnectionDB.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, membre.getId());
-            ps.setString(2, membre.getNom());
-            ps.setString(3, membre.getSportPratique());
-            ps.setDate(4, membre.getNaissance());
-            ps.executeUpdate();
-        }
-
-        public static Membre ModifierMembre() throws SQLException, ClassNotFoundException{
-            Membre membre = new Membre();
-            String sql = "UPDATE membre SET nom=?,SportPratique=?,Naissance=? WHERE id=?";
-            Connection conn = ConnectionDB.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, membre.getNom());
-            ps.setString(2, membre.getSportPratique());
-            ps.setDate(3, membre.getNaissance());
-            ps.setInt(4, membre.getId());
-            ps.executeUpdate();
-            return membre;
-        }
-
-        public static void deleteMembre() throws SQLException, ClassNotFoundException{
-            Membre membre = new Membre();
-            String sql = "DELETE FROM membre WHERE id=?";
-            Connection conn = ConnectionDB.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, membre.getId());
-            ps.executeUpdate();
-        }
-
+        return null;
+    }
 
 }
 
