@@ -2,7 +2,10 @@ package com.example.sportflow.dao;
 
 import com.example.sportflow.Config.ConnectionDB;
 import com.example.sportflow.model.Membre;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ public class MembreDAO {
             return membres;
         }
 
-        public static Membre getMemreById(int id) throws SQLException, ClassNotFoundException {
+        public static Membre getMembreById(int id) throws SQLException, ClassNotFoundException {
             String sql = "SELECT * FROM membre WHERE id = ?";
             Connection con = ConnectionDB.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -44,7 +47,7 @@ public class MembreDAO {
 
 
 
-    public void AjouterMemre() throws SQLException, ClassNotFoundException{
+    public void AjouterMembre() throws SQLException, ClassNotFoundException{
             Membre membre = new Membre();
             String sql = "INSERT INTO membre(id, nom,SportPratique,Naissance) VALUES(?,?,?,?)";
             Connection conn = ConnectionDB.getConnection();
@@ -77,6 +80,7 @@ public class MembreDAO {
             ps.setInt(1, membre.getId());
             ps.executeUpdate();
         }
+
 
 }
 

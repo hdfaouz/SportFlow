@@ -69,7 +69,7 @@ public class MembreServlet extends HttpServlet {
 
     private void modifier(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Membre membre =MembreDAO.ModifierMembre();
+        Membre membre =MembreDAO.getMembreById();
         request.setAttribute("membre", membre);
         request.getRequestDispatcher("WEB-INF/Membre/modifierMembre.jsp");
     }
@@ -83,17 +83,27 @@ public class MembreServlet extends HttpServlet {
     private void ajouteMem(HttpServletRequest request, HttpServletResponse response) {
         request.getRequestDispatcher("/WEB-INF/Membre/ajouterMembre.jsp");
     }
-    private void saveNewEntraineur(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
+    private void saveNewMembre(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
 
-        Membre membre = new Membre();
-        //entraineur.setId(Integer.parseInt(req.getParameter("id")));
-       membre.setNom(req.getParameter("nom"));
-       membre.setSportPratique(req.getParameter("SportPratique"));
-       membre.setNaissance(Date.valueOf(req.getParameter("Naissance")));
+       Membre membre = new Membre();
+
+        membre.setNom(req.getParameter("nom"));
+        membre.setSportPratique(req.getParameter("SportPratique"));
+        membre.setNaissance(Date.valueOf(req.getParameter("Naissance")));
         System.out.println(membre);
-        membreDAO.AjouterMemre(membre);
+        membreDAO.AjouterMembre();
         resp.sendRedirect(req.getContextPath() + "/membre");
     }
+    private void updateMembre(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
+       Membre membre = new Membre();
+        membre.setId(Integer.parseInt(req.getParameter("id")));
+        membre.setNom(req.getParameter("nom"));
+        membre.setSportPratique(req.getParameter("SportPratique"));
+        membre.setNaissance(Date.valueOf(req.getParameter("Naissance")));
+       membreDAO.ModifierMembre();
+        resp.sendRedirect(req.getContextPath() + "/membre");
+    }
+
 
 
 }
